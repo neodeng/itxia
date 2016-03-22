@@ -1,0 +1,192 @@
+{% extends "/knight/layout.html" %}
+
+{% set active="finish" %}
+{% set cssfiles="knight.css" %}
+{% set jsfiles="knight.js" %}
+
+{% block content %}
+
+<div class="container">
+
+	<div>
+		<h1>处理完成</h1>
+		<hr class="colorgraph">
+	</div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<div class="list-group">
+				<a href="/knight/wait"
+					class="list-group-item"><span
+					class="badge">{{number[0]}}</span>等待处理</a> <a href="/knight/work"
+					class="list-group-item"><span
+					class="badge">{{number[1]}}</span>正在处理</a> <a href="/knight/finish"
+					class="list-group-item list-group-item-success"><span
+					class="badge">{{number[2]}}</span>处理完成</a>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+ <!--
+			<form role="form" action="/knight/finish" method="GET">
+				<div class="input-group">
+						<span class="input-group-addon">记录搜索</span> <input type="text" name="search"
+							class="form-control" placeholder="关键字"> <span
+							class="input-group-btn">
+							<button class="btn btn-primary" type="submit" value="Submit"><span class="glyphicon glyphicon-search"></span></button>
+						</span>
+				</div>
+			</form>
+ -->
+
+			<br />
+
+		{% for each in data %}
+			<div class="panel panel-success" id="{{each['_id']}}">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<a target="_blank" href="http://browse.renren.com/s/all?from=opensearch&q={{each['name']}} 南京大学">{{each['name']}}</a>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<p>
+						<strong>IT侠: {{each['handler']}}</strong>
+					</p>
+					<p>
+						<strong>提交时间: </strong>{{each['order_time']}}
+					</p>
+					<p>
+						<strong>手机号码: </strong><a href="tel:{{each['phone_number']}}">{{each['phone_number']}}</a>
+					</p>
+					<form class="form" action="http://bbs.nju.edu.cn/bbsfind" method="post">
+						<input type=hidden name=flag value=1>
+						<input type=hidden name=user value="{{each['lilybbs_id']}}">
+						<input type=hidden name=title>
+						<input type=hidden name=title2>
+						<input type=hidden name=title3>
+						<input type=hidden name=day value=0>
+						<input type=hidden name=day2 value=999>
+						<p>
+							<strong>百合帐号: </strong><span class="subform">{{each['lilybbs_id']}}</span>
+						</p>
+					</form>
+					<p>
+						<strong>电脑型号: </strong><a target="_blank" href="http://www.baidu.com/s?word={{each['machine_model']}}+拆机图">{{each['machine_model']}}</a>
+					</p>
+					<p>
+						<strong>操作系统: </strong>{{each['operate_system']}}
+					</p>
+					<p>
+						<strong>问题描述: </strong>{{each['description']}}
+					</p>
+
+					{% if not each['yunfile'] == [] %}
+						<div style="margin: 0px 0px 10px;">
+							<strong>上传文件: </strong>
+							{% for eachfile in each['yunfile'] %}
+                                {% set webdiskhref = 'href="' + config.WEBDISKURL + '/' + eachfile['file_name'] +'"' %}
+                                {% set webdisksrc = 'src="' + config.WEBDISKURL + '/' + eachfile['file_name'] +'"' %}
+								{% if eachfile['ext'] == '.JPG' or eachfile['ext'] == '.JPEG' or eachfile['ext'] == '.BMP' or eachfile['ext'] == '.GIF' or eachfile['ext'] == '.PNG' %}
+									<!-- Button trigger modal -->
+									<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{loop.index}}" style="color: #428BCA;">
+										{{eachfile['ext']}}文件{{loop.index}}
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="myModal{{loop.index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{loop.index}}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+													<h4 class="modal-title" id="myModalLabel{{loop.index}}">{{eachfile['ext']}}文件{{loop.index}}</h4>
+												</div>
+												<div class="modal-body">
+													<a target="_blank" webdiskhref class="btn btn-default btn-sm" role="button"><img style="height: auto; width: 100%;" webdisksrc></a>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% else %}
+									<a target="_blank" webdiskhref class="btn btn-default btn-sm" role="button" style="color: #428BCA;">{{eachfile['ext']}}文件{{loop.index}}</a>
+                                {% endif %}
+                            {% endfor %}
+						</div>
+					{% endif %}	
+						
+					<button type="button" class="btn btn-default replybtn">展开回复信息{{each['comments']|length}}</button>
+
+					<div class="reply">
+						{% for eachreply in each['comments'] %}
+							{% if eachreply['username'] == session['account'] %}
+								{% set style = "callout callout-left" %}
+							{% else %}
+								{% set style = "callout callout-right" %}
+                            {% endif %}
+								
+							<div class="row replyrow" replyid="">
+								<div class="{{style}}">
+									<h4>
+										{% if user == eachreply['username'] %}
+											<small><span class="glyphicon glyphicon-remove" style="color:#CC0033;display:none;"></span></small>
+										{{eachreply['username']}} <small>{{eachreply['created_time']}}</small>
+                                        {% else %}
+                                        <small><span class="glyphicon glyphicon-remove" style="color:#CC0033;display:none;"></span></small>
+										用户 <small>{{eachreply['created_time']}}</small>
+                                        {% endif %}
+									</h4>
+									<p>{{eachreply['content']}}</p>
+								</div>
+							</div>
+						{% endfor %}
+						<br />
+						<textarea class="form-control content" name="content" rows="3"
+							placeholder="点击回复..."></textarea>
+						<input type="text" class="order" name="order" value="{{each['_id']}}" style="display: none">
+						<br />
+						<button class="subbtn btn btn-block btn-primary">回复</button>
+					</div>
+				</div>
+			</div>
+        {% endfor %}
+		</div>
+	</div>
+</div>
+	
+<div class="container" style="text-align:center;">
+	<ul class="pagination">
+		<li><a href="/knight/finish/0"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+		{% set max = ( number[2] - 1 )//30 %}
+		{% if page > 0 %}
+			{% set back = page - 1 %}
+		{% else %}
+			{% set back = 0 %}
+        {% endif %}
+		{% if page < max %}
+			{% set next = page + 1 %}
+		{% else %}
+			{% set next = max %}
+        {% endif %}
+		<li><a href="/knight/finish/{{back}}"><span class="glyphicon glyphicon-backward"></span></a></li>
+        {% for i in range(0, max + 1) %}
+			{% if i == page-3 %}
+				<li><a>...</a></li>
+            {% endif %}
+			{% if i >= page-2 and i <= page+2 %}
+				{% if i == page %}
+					<li class="active"><a href="/knight/finish/{{i}}">{{loop.index}}</a></li>
+				{% else %}
+					<li><a href="/knight/finish/{{i}}">{{loop.index}}</a></li>
+                {% endif %}
+            {% endif %}
+			{% if i == page+3 %}
+				<li><a>...</a></li>
+            {% endif %}
+        {% endfor %}
+		<li><a href="/knight/finish/{{next}}"><span class="glyphicon glyphicon-forward"></span></a></li>
+		<li><a href="/knight/finish/{{max}}"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+	</ul>
+</div>
+{% endblock %}

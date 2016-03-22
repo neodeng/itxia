@@ -1,0 +1,116 @@
+{% extends "/knight/layout.html" %}
+
+{% set active="setting" %}
+{% set cssfiles="knight.css" %}
+{% set jsfiles="setting.js" %}
+
+{% block content %}
+
+<div class="container">
+	<div>
+		<h1>人员管理</h1>
+		<hr class="colorgraph">
+	</div>
+
+	<form role="form" name="input" action="/knight/setting/add" method="post">
+		<div class="input-group">
+			<span class="input-group-addon">姓名:</span> <input type="text"
+				class="form-control" name="name" placeholder="name" required> <span
+				class="input-group-addon">账号:</span> <input type="text"
+				class="form-control" name="account" placeholder="account" required> <span
+				class="input-group-addon">密码:</span> <input type="text"
+				class="form-control" name="password" placeholder="Password" required> <span
+				class="input-group-addon"> <input type="radio" checked="checked" name="location" value="鼓楼">鼓楼
+				<input type="radio" name="location" value="仙林">仙林
+			</span> <span class="input-group-btn">
+				<button class="btn btn-primary" type="submit" value="Submit">添加IT侠</button>
+			</span>
+		</div>
+		<span class="help-block">为系统添加新的IT侠</span>
+	</form>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>姓名</th>
+				<th>账号</th>
+				<th>校区</th>
+				<th>权限</th>
+				<th>删除信息</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for each in userlist %}
+			{% if each['authority'] == 0 %}
+				{% set admintd = '<td><button class="btn btn-success btn-xs upbtn" type="submit" value="Submit">提升为管理员</button></td>' %}
+				{% set status = '' %}
+			{% else %}
+				{% set admintd = '<td>管理员</td>' %}
+				{% set status = 'class="success"' %}
+            {% endif %}
+			<tr {{status}}>
+				<td>{{loop.index}}</td>
+				<td>{{each['name']}}</td>
+				<td class="account">{{each['account']}}</td>
+				<td>{{each['campus']}}</td>
+				{{admintd|safe}}
+				<td><button class="btn btn-danger btn-xs delbtn"><span class="glyphicon glyphicon-remove"></span>删除</button></td>
+			</tr>
+        {% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}
+
+<!--
+<div class="container">
+	<div>
+		<h1>文件管理</h1>
+		<hr class="colorgraph">
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>订单号</th>
+				<th>文件名</th>
+				<th>文件类型</th>
+				<th>上传时间</th>
+				<th>删除文件</th>
+			</tr>
+		</thead>
+		<tbody>
+		$for each in filelist:
+			$if each.exist:
+				$ status = 'class="file"'
+				$ link = '<a target="_blank" class="filename" href="' + webDiskUrl + '/' + each.name + '">' + each.name + '</a>'
+			$else:
+				$ status = 'class="danger file"'
+				$ link = '文件不存在'
+			<tr $:status>
+				<td>$loop.index</td>
+				<td>$each.oid</td>
+				<td>$:link</td>
+				<td>$each.ext</td>
+				<td>$each.time</td>
+				<td><button class="btn btn-danger btn-xs delfile"><span class="glyphicon glyphicon-remove"></span>删除</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+	$if not (unuselist == []):
+		<div class="well well-sm">
+			<h3>未使用的文件</h3>
+			<p>
+			$for each in unuselist:
+				<span class="file">
+					<a target="_blank" class="filename" href="$webDiskUrl/$each">$each</a>
+					<small><span class="delfile glyphicon glyphicon-remove" style="opacity: 0"></span></small>
+				</span>
+			</p>
+		</div>
+</div>
+-->

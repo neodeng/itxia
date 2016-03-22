@@ -1,0 +1,38 @@
+{% extends "/user/layout.html" %}
+
+{% set active="knight" %}
+{% set cssfiles="login.css" %}
+{% set jsfiles="" %}
+
+{% block content %}
+
+<div class="container" style="background-color: #fff; height:85%">
+	<h1>登录</h1>
+	<hr class="colorgraph">
+	
+	{% if message %}
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>{{message}}</strong>
+		</div>
+    {% endif %}
+
+	{% if username %}
+		{% set name = 'value="' + username + '"' %}
+	{% else %}
+		{% set name = '' %}
+    {% endif %}
+
+	<form class="form-signin" role="form" action="/" method="post">
+		<img alt="NJU IT侠" src="/static/images/logo.jpg" class="img-responsive center-block" />
+		<input type="text" name="name" class="form-control" placeholder="账号" {{name}} required>
+		<input type="password" name="password" class="form-control" placeholder="密码" required>
+		<button class="btn btn-primary btn-block" type="submit">登录</button>
+	</form>
+</div>
+
+<div class="container" style="text-align: center; background-color: #fff; height:15%">
+	<hr class="colorgraph">
+	<p><small>Designed and built by <a href="/eggs" style="color:#333;cursor:default;text-decoration:none;">LC</a>. Powered by <a href="http://sae.sina.com.cn"><img src="$config.static/images/poweredby.gif"></a></p></small>
+</div>
+{% endblock %}

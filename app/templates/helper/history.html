@@ -1,0 +1,84 @@
+{% extends "/helper/layout.html" %}
+
+{% set active="history" %}
+{% set cssfiles="helper.css" %}
+{% set jsfiles="history.js" %}
+
+{% block content %}
+
+<div class="container" style="background-color: #fff">
+	<div>
+		<h1>历史请求</h1>
+		<hr class="colorgraph">
+	</div>
+{% if orderlist|length == 0 %}
+	<div class="alert alert-info alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>暂无请求信息</strong>
+	</div>
+{% else %}
+	{% for each in orderlist %}
+            
+		{% if each['status'] == 0 %}
+		    {% set status = "等待处理" %}
+		    {% set style = "warning" %}
+	    {% elif each['status'] == 1 %}
+		    {% set status = "正在处理，请查看你的手机，IT侠已经联系你了" %}
+		    {% set style = "info" %}
+	    {% elif each['status'] == -1 %}
+		    {% set status = "处理完成" %}
+		    {% set style = "success" %}
+     	{% endif %}
+    
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<div class="panel panel-$style">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							{{status}}
+						</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<p>
+									<strong>提交时间: </strong>{{each['order_time']}}
+								</p>
+							</div>
+							<div class="col-sm-6">
+								<p>
+									<strong>手机号码: </strong>{{each['phone_number']}}
+								</p>
+							</div>
+							<div class="col-sm-6">
+								<p>
+									<strong>百合帐号: </strong>{{each['lilybbs_id']}}
+								</p>
+							</div>
+							<div class="col-sm-6">
+								<p>
+									<strong>所在校区: </strong>{{each['campus']}}校区
+								</p>
+							</div>
+							<div class="col-sm-6">
+								<p>
+									<strong>电脑型号: </strong>{{each['machine_model']}}
+								</p>
+							</div>
+							<div class="col-sm-6">
+								<p>
+									<strong>操作系统: </strong>{{each['operate_system']}}
+								</p>
+							</div>
+						</div>
+						<p>
+							<strong>问题描述: </strong>{{each['description']}}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+    {% endfor %}
+{% endif %}
+</div>
+{% endblock %}

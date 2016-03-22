@@ -1,0 +1,96 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+	padding-top: 50px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-signin button[type="submit"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.unsupported-browser{
+  padding:15px 0;
+  color:#211e14;
+  background-color:#fae692;
+  background-image:-moz-linear-gradient(#feefae, #fae692);
+  background-image:-webkit-linear-gradient(#feefae, #fae692);
+  background-image:linear-gradient(#feefae, #fae692);
+  background-repeat:repeat-x;
+  border-bottom:1px solid #b3a569;
+}
+.unsupported-browser h5{
+  font-size:13px;
+  margin:5px 0 2px;
+  padding-left:48px;
+}
+.unsupported-browser p{
+  margin:0;
+  padding-left:48px;
+}
+// Class
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Usage as a mixin
+.element {
+  .center-block();
+}
+
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+	height: 5px;
+	border-top: 0;
+	background: #c4e17f;
+	border-radius: 5px;
+	background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%,
+		#f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%,
+		#db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%,
+		#669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+	background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%,
+		#f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%,
+		#db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%,
+		#669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+	background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca
+		25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe
+		50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1
+		87.5%, #62c2e4 87.5%, #62c2e4);
+	background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca
+		25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe
+		50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1
+		87.5%, #62c2e4 87.5%, #62c2e4);
+}

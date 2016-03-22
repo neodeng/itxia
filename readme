@@ -1,0 +1,5 @@
+## 本机部署和测试方法
+* 安装 Flask MongoDB Flask-MongoKit pip install -r requirements.txt
+* python run.py 启动本地服务器
+* python create_admin 添加初始管理员
+* 初始admin: 账号:'itxia' 密码:'itxia'
